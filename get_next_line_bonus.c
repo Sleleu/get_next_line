@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sleleu <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:15:13 by sleleu            #+#    #+#             */
-/*   Updated: 2022/05/25 22:19:52 by sleleu           ###   ########.fr       */
+/*   Updated: 2022/05/25 23:02:55 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_get_line(char *line)
 {
@@ -72,13 +72,13 @@ char	*ft_read_line(int fd, char *line, char *buff)
 
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE + 1];
+	static char	buff[1024][BUFFER_SIZE + 1];
 	char		*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) == -1)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, buff, 0) == -1)
 		return (NULL);
-	line = ft_read_line(fd, line, buff);
+	line = ft_read_line(fd, line, buff[fd]);
 	if (line[0] == '\0')
 	{
 		free(line);
