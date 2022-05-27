@@ -53,17 +53,19 @@ char	*ft_read_line(int fd, char *line, char *buff)
 
 	return_value = 1;
 	line = ft_strjoin(line, buff);
-	while (return_value != 0)
+	while (!ft_strchr(line, '\n') && return_value != 0)
 	{
 		return_value = read(fd, buff, BUFFER_SIZE);
+			if (return_value == -1)
+				return (NULL);
 		buff[return_value] = '\0';
 		line = ft_strjoin(line, buff);
 		if (ft_strchr(line, '\n'))
-		{
-			buff = ft_get_endline(line, buff);
-			line = ft_get_line(line);
-			break ;
-		}
+	}
+	if (ft_strchr(line, '\n'))
+	{
+		buff = ft_get_endline(line, buff);
+		line = ft_get_line(line);
 	}
 	if (line == NULL)
 		return (NULL);
